@@ -87,6 +87,7 @@ export default {
   right: 0;
   bottom: 0;
   min-width: 1100px;
+  overflow: auto;
   .header {
     color: #F9FAFC;
     background: #324057;
@@ -123,11 +124,14 @@ export default {
       flex: 0 0 200px;
       width: 200px;
       height: 100%;
+      overflow: auto;
       background: #EFF2F7;
     }
     .content {
       flex: 1 1 auto;
       width: 100%;
+      height: 100%;
+      overflow: auto;
     }
   }
 }

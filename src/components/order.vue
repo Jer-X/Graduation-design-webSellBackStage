@@ -87,19 +87,30 @@
 
 <script>
 const ERR_OK = 0;
+import io from 'socket.io-client';
 
 export default {
     data() {
         return {
-            orders: []
+            orders: [],
+            socket: ''
         };
     },
     created() {
         this.$http.get('/data/order').then((res) => {
             res = res.body;
             if (res.errno === ERR_OK) {
-                this.orders = res.data;
+                this.orders = res.data.reverse();
             }
+        });
+        const that = this;
+        this.socket = io.connect('http://localhost:9000');
+        this.socket.on('update', (obj) => {
+            that.orders = obj.data.reverse();
+            that.$message({
+                type: 'warning',
+                message: '有新的订单,请查看!'
+            });
         });
     },
     methods: {
@@ -134,7 +145,7 @@ export default {
             this.$http.get('/data/order').then((res) => {
                 res = res.body;
                 if (res.errno === ERR_OK) {
-                    this.orders = res.data;
+                    this.orders = res.data.reverse();
                 }
             });
         }
